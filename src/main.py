@@ -1,11 +1,12 @@
 # Importamos la librería pandas para manejo de datos tabulares
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Configuramos pandas para que imprima hasta 9999 filas completas si es necesario
 pd.options.display.max_rows = 9999
 
 # Leemos el archivo CSV con datos de ventas y lo guardamos en el DataFrame 'df'
-df = pd.read_csv("C:\\Users\\jorge\\OneDrive\\Escritorio\\python practice\\anailisis_de_datos_con_pandas_06_08_25\\src\\ventas_practica.csv")
+df = pd.read_csv("C:\\Users\\jquiros\\Desktop\\POO\\pandas\\anailisis_de_datos_con_pandas_06_08_25\src\\ventas_practica.csv")
 
 # Creamos un diccionario para convertir cantidades escritas como texto a números
 texto_a_numero = {
@@ -82,3 +83,46 @@ print("Producto más vendido en Transferencia:", producto_mas_vendido_transferen
 # Imprimimos el DataFrame final con todas las modificaciones
 print("DataFrame final:")
 print(new_df)
+
+total_ventas= new_df["Precio"].sum()
+print(f"El total de ventas es  {total_ventas}")
+
+ventas_por_cliente= new_df.groupby("Cliente")['Precio'].sum().sort_values(ascending=False).reset_index()
+
+print(f"El total de ventas es por cliente  {ventas_por_cliente}")
+cliente_con_mas_ventas= ventas_por_cliente.iloc[0]
+
+print(f"el cliente con mas ventas es {cliente_con_mas_ventas['Cliente']} , por ventas de {cliente_con_mas_ventas['Precio']}")
+
+cantidad_por_producto= new_df.groupby('Producto')['Cantidad'].sum().sort_values(ascending=False)
+print(f"cantidad total por peoducto: {cantidad_por_producto}")
+producto_mas_vendido= cantidad_por_producto.index[0]
+
+print(f'producto mas vendido {producto_mas_vendido}')
+
+#Pago mas utilizado
+metodo_mas_utilizado= new_df['Pago'].value_counts().idxmax()
+print(f"El metodo mas utilizado fue {metodo_mas_utilizado}")
+
+
+promedio_ventas= round(new_df["Precio"].mean(),0)
+print(f'El promedio de ventas fue {promedio_ventas:.0f}')
+
+promedio_cantidad= new_df["Cantidad"].mean()
+print(f'El promedio de cantidades fue {promedio_cantidad: .0f}')
+
+total_ventas_por_pago= new_df["Pago"].value_counts()
+print('Cantidad por forma de pago')
+print(total_ventas_por_pago)
+
+print('---------------------')
+ventas_por_producto= new_df.groupby('Producto')['Precio'].sum().sort_values(ascending=False).reset_index()
+print(f'Ventas por producto {ventas_por_producto}')
+
+ventas_por_producto_tarjeta.plot(kind= 'bar', title= 'ventas por producto tarjeta', ylabel= 'Precio')
+plt.tight_layout()
+plt.show()
+
+ventas_por_producto.plot(kind='bar', title= 'Ventas por producto', ylabel='Precio')
+plt.tight_layout()
+plt.show()
