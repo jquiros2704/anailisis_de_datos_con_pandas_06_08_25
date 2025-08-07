@@ -115,9 +115,14 @@ total_ventas_por_pago= new_df["Pago"].value_counts()
 print('Cantidad por forma de pago')
 print(total_ventas_por_pago)
 
+
+
 print('---------------------')
 ventas_por_producto= new_df.groupby('Producto')['Precio'].sum().sort_values(ascending=False).reset_index()
 print(f'Ventas por producto {ventas_por_producto}')
+
+new_df['Total a Pagar']= new_df["Cantidad"]* new_df["Precio"]
+print(new_df)
 
 ventas_por_producto_tarjeta.plot(kind= 'bar', title= 'ventas por producto tarjeta', ylabel= 'Precio')
 plt.tight_layout()
@@ -126,3 +131,4 @@ plt.show()
 ventas_por_producto.plot(kind='bar', title= 'Ventas por producto', ylabel='Precio')
 plt.tight_layout()
 plt.show()
+
